@@ -9,14 +9,12 @@ public class Cell {
     }
     public void kill(){
         alive =  false;
-        Main.population--;
     }
     public void setAlive(boolean alive){
         this.alive = alive;
     }
     public void birth(){
         alive = true;
-        Main.population++;
     }
     public String toString(){
         if (alive){

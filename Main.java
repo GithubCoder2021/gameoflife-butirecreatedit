@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Main {
-    public static Cell[][] conway = new Cell[16][12]; // you can modify the size here
-    public static Cell[][] bufferGrid = new Cell[16][12]; // storage when switching living status between generations KEEP IT AT SAME DIMENSIONS
+    public static Cell[][] conway = new Cell[12][12]; // you can modify the size here
+    public static Cell[][] bufferGrid = new Cell[12][12]; // storage when switching living status between generations KEEP IT AT SAME DIMENSIONS
     public static int population = 0;
 
     public static void main(String[] args) {
@@ -21,7 +21,6 @@ public class Main {
         conway[2][1].birth();
         bufferSetup();
         while (generation <= maxGeneration) {
-            clear();
             System.out.println("Generation: " + generation);
             System.out.println("Population: " + population);
             showGrid();
@@ -75,6 +74,9 @@ public class Main {
         for (int r = 0; r < conway.length; r++) {
             for (int c = 0; c < conway[0].length; c++) {
                 bufferGrid[r][c].setAlive(conway[r][c].getAlive());
+                 if (bufferGrid[r][c].getAlive()){
+                    population++;
+                }
             }
         }
     }
@@ -123,10 +125,12 @@ public class Main {
         }
         if (conway[r][c].getAlive() && (neighbors > 3 || neighbors < 2)) {
             bufferGrid[r][c].kill(); // Cell dies if there are 0-1 or 4+ living neighbors
+            population--;
         }
 
         if (!conway[r][c].getAlive() && neighbors == 3) {
             bufferGrid[r][c].birth(); // Cell comes back to life if there are 3 living neighbors
+            population++;
         }
     }
 }
